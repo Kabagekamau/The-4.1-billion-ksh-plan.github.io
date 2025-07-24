@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kabage Kamaus Budget</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Background with white and lavender stripes */
+            background: repeating-linear-gradient(
+                45deg,
+                #ffffff, /* White */
+                #ffffff 20px,
+                #E6E6FA 20px, /* Lavender */
+                #E6E6FA 40px
+            );
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+        .section-title-box {
+            border-radius: 0.75rem; /* Slightly less rounded for inner boxes */
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.875rem; /* text-3xl */
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            cursor: pointer; /* Indicate clickable */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .section-title-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb; /* Light gray border */
+            transition: background-color 0.2s ease-in-out;
+            cursor: pointer; /* Indicate clickable */
+        }
+        .item-row:last-child {
+            border-bottom: none; /* No border for the last item */
+        }
+        .item-row:hover {
+            background-color: #f8f8f8; /* Slight hover effect */
+        }
+        .sub-item {
+            padding-left: 1.5rem;
+            font-size: 0.875rem; /* text-sm */
+            color: #6b7280; /* Gray text */
+        }
+        .clickable-name {
+            cursor: pointer;
+            font-weight: bold;
+            color: #ef4444; /* A shade of red for names in campaign section */
+            text-decoration: underline;
+        }
+        .clickable-name:hover {
+            color: #dc2626;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            transform: scale(0.9);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .modal-close-button:hover {
+            color: #374151;
+        }
+
+        /* Background Watermark Text */
+        .background-watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-20deg); /* Slightly rotate for watermark effect */
+            font-family: 'Times New Roman', serif;
+            font-size: 10vw; /* Responsive font size */
+            color: rgba(0, 0, 0, 0.05); /* Very light, semi-transparent black */
+            z-index: -1; /* Ensure it stays behind content */
+            white-space: nowrap; /* Prevent text wrapping */
+            pointer-events: none; /* Allow clicks on elements below it */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8 lg:p-10">
+
+    <!-- Background Watermark Text -->
+    <div class="background-watermark">
+        Kabage Kamau
+    </div>
+
+    <div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 lg:p-12 mb-8">
+        <h1 class="text-4xl sm:text-5xl font-bold text-center text-blue-800 mb-2">Kabage Kamaus Budget</h1>
+        <p class="text-xl text-center text-gray-600 mb-8">The plan</p>
+
+        <!-- JESUS CHRIST Text above KCB BANK KENYA -->
+        <p style="font-size: 30px; font-weight: bold; font-family: 'Cambria', serif; text-align: center; margin-top: 1rem; margin-bottom: 1rem;">JESUS CHRIST</p>
+        <!-- KCB Bank Text -->
+        <p class="text-center font-bold underline mb-4" style="font-size: 44px; font-family: Cambria, serif;">KCB BANK KENYA</p>
+
+        <!-- Total Estimated Budget Section -->
+        <div class="bg-blue-700 text-white rounded-2xl p-6 sm:p-8 md:p-10 text-center mb-10 shadow-lg">
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-2">Total Estimated Budget</h2>
+            <p class="text-4xl sm:text-5xl md:text-6xl font-bold mb-2">4,100,000,000 KSH</p>
+            <p class="text-lg sm:text-xl">(Four Billion Kenyan Shillings)</p>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+
+            <!-- JESUS CHRIST Initiatives Section -->
+            <div class="card">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">JESUS CHRIST Initiatives</h3>
+                <div class="section-title-box bg-blue-600" onclick="openModal('Church and Education', '<p class=\'text-lg font-semibold mb-2\'>Victory Faith Church: <span class=\'font-bold text-blue-700\'>1,200,000,000 KSH</span></p><p class=\'text-lg font-semibold mb-2\'>Heritage Leadership Academy -(all revenue/profits to Orphan Support in Kenya): <span class=\'font-bold text-blue-700\'>500,000,000 KSH</span></p><p class=\'text-lg font-semibold mb-2\'>Spreading the Gospel of salvation (Uganda, Tanzania, Kenya, Burundi, Rwanda, Ethiopia - 3 yrs): <span class=\'font-bold text-blue-700\'>600,000,000 KSH</span></p><p class=\'text-lg font-semibold\'>Church Renovations, Faith Bible Academy, Victorious Prayer Center (6 months building and renovations): <span class=\'font-bold text-blue-700\'>100,000,000 KSH</span></p>', 'blue')">
+                    Church and Education
+                </div>
+                <div class="item-row" onclick="openModal('Victory Faith Church', '<p class=\'text-lg font-semibold\'>Victory Faith Church: <span class=\'font-bold text-blue-700\'>1,200,000,000 KSH</span></p>')">
+                    <span class="font-medium">Victory Faith Church:</span>
+                    <span class="font-bold text-blue-700">1,200,000,000 KSH</span>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Heritage Leadership Academy -(all revenue/profits to Orphan Support in Kenya):</span>
+                    <span class="font-bold text-blue-700">500,000,000 KSH</span>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Spreading the Gospel of salvation (Uganda, Tanzania, Kenya, Burundi, Rwanda, Ethiopia - 3 yrs):</span>
+                    <span class="font-bold text-blue-700">600,000,000 KSH</span>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Church Renovations, Faith Bible Academy, Victorious Prayer Center (6 months building and renovations):</span>
+                    <span class="font-bold text-blue-700">100,000,000 KSH</span>
+                </div>
+            </div>
+
+            <!-- Campaign Budget Section -->
+            <div class="card">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Campaign Budget (365 days-july 2026 to july 2027)</h3>
+                <p style="font-size: 30px; font-weight: bold; font-family: 'Cambria', serif; text-align: center; margin-top: 1rem; margin-bottom: 1rem;">JESUS CHRIST</p>
+                <div class="section-title-box bg-red-600" onclick="openModal('Political Campaign Details', '<p class=\'text-lg font-semibold mb-2\'>Total Campaign Budget: <span class=\'font-bold text-red-700\'>2,000,000,000 KSH</span></p><p class=\'font-semibold text-gray-700 mb-2\'>The Kairu Family:</p><ul class=\'list-disc list-inside text-gray-600 space-y-1\'><li>60 days of strategic planning</li><li>1 Governor (Murang\\\'a): <span class=\'font-bold text-orange-700\'>Kabage Kamau</span></li><li>3 Senators (Murang\\\'a, Nyeri, Kiambu):<ul class=\'list-disc list-inside ml-6\'><li>Joyce Waithera</li><li>Victor Irungu</li><li>Joyce Mukuhi</li></ul></li><li>9 Members of Parliament (Murang\\\'a, Nyeri, Kiambu)</li></ul>', 'red')">
+                    Political Campaign
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Total Campaign Budget:</span>
+                    <span class="font-bold text-red-700">2,000,000,000 KSH</span>
+                </div>
+                <div class="mt-4">
+                    <p class="font-semibold text-gray-700 mb-2">The Kairu Family:</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        
+                        <li>1 Governor (Murang'a): <span class="clickable-name" onclick="openModal('Governor of Murang\'a', '<p class=\'text-lg font-semibold\'>Governor of Murang\'a: <span class=\'font-bold text-orange-700\'>Kabage Kamau</span></p>')">Kabage Kamau</span></li>
+                        <li>3 Senators (Murang'a, Nyeri, Kiambu):
+                            <ul class="list-disc list-inside ml-6">
+                                <li><span class="clickable-name" onclick="openModal('Senator of Murang\'a', '<p class=\'text-lg font-semibold\'>Senator of Murang\'a: <span class=\'font-bold text-orange-700\'>Joyce Waithera</span></p>')">Joyce Waithera</span></li>
+                                <li><span class="clickable-name" onclick="openModal('Senator of Nyeri', '<p class=\'text-lg font-semibold\'>Senator of Nyeri: <span class=\'font-bold text-orange-700\'>Victor Irungu</span></p>')">Victor Irungu</span></li>
+                                <li><span class="clickable-name" onclick="openModal('Senator of Kiambu', '<p class=\'text-lg font-semibold\'>Senator of Kiambu: <span class=\'font-bold text-orange-700\'>Joyce Mukuhi</span></p>')">Joyce Mukuhi</span></li>
+                            </ul>
+                        </li>
+                        <li>9 Members of Parliament (Murang'a, Nyeri, Kiambu)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- My Home Section -->
+            <div class="card">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">My home</h3>
+                <p style="font-size: 30px; font-weight: bold; font-family: 'Cambria', serif; text-align: center; margin-top: 1rem; margin-bottom: 1rem;">JESUS CHRIST</p>
+                <div class="section-title-box bg-teal-600" onclick="openModal('Luxury Homes', '<p class=\'text-lg font-semibold mb-2\'>Muthaiga Home: <span class=\'font-bold text-teal-700\'>500,000,000 KSH</span></p><p class=\'font-semibold text-gray-700 mb-2\'>My home area- muthaiga road:</p><ul class=\'list-disc list-inside text-gray-600 space-y-1\'><li>Ghana High Commission</li><li>Jimmy Wanjigi</li><li>Poland embassy</li><li>Spain Area Residence</li></ul>', 'teal')">
+                    Luxury Homes
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Muthaiga Home:</span>
+                    <span class="font-bold text-teal-700">500,000,000 KSH</span>
+                </div>
+                <div class="mt-4">
+                    <p class="font-semibold text-gray-700 mb-2">My home area- muthaiga road:</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>Ghana High Commission</li>
+                        <li>Jimmy Wanjigi</li>
+                        <li>Poland embassy</li>
+                        <li>Spain Area Residence</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Vehicles Section -->
+            <div class="card">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Vehicles</h3>
+                <p style="font-size: 30px; font-weight: bold; font-family: 'Cambria', serif; text-align: center; margin-top: 1rem; margin-bottom: 1rem;">JESUS CHRIST</p>
+                <div class="item-row bg-green-100 rounded-lg px-3 mb-2">
+                    <span class="font-semibold">Total Car Budget:</span>
+                    <span class="font-bold text-green-700">100,000,000 KSH</span>
+                </div>
+                <div class="item-row" onclick="openModal('Jeep Grand Cherokee', '<p class=\'text-lg font-semibold\'>Jeep Grand Cherokee: <span class=\'font-bold text-lime-700\'>20,000,000 KSH</span></p>')">
+                    <span class="font-medium">Jeep Grand Cherokee:</span>
+                    <span class="font-bold text-green-700">20,000,000 KSH</span>
+                </div>
+                <div class="item-row" onclick="openModal('Aston Martin DBX', '<p class=\'text-lg font-semibold\'>Aston Martin DBX: <span class=\'font-bold text-lime-700\'>30,000,000 KSH</span></p>')">
+                    <span class="font-medium">Aston Martin DBX:</span>
+                    <span class="font-bold text-green-700">30,000,000 KSH</span>
+                </div>
+                <div class="item-row" onclick="openModal('Range Rover', '<p class=\'text-lg font-semibold\'>Range Rover: <span class=\'font-bold text-lime-700\'>30,000,000 KSH</span></p>')">
+                    <span class="font-medium">Range Rover:</span>
+                    <span class="font-bold text-green-700">30,000,000 KSH</span>
+                </div>
+                <div class="item-row" onclick="openModal('Nissan Juke', '<p class=\'text-lg font-semibold\'>Nissan Juke: <span class=\'font-bold text-lime-700\'>2,000,000 KSH</span></p>')">
+                    <span class="font-medium">Nissan Juke:</span>
+                    <span class="font-bold text-green-700">2,000,000 KSH</span>
+                </div>
+                <div class="item-row" onclick="openModal('Land Rover (Old Model)', '<p class=\'text-lg font-semibold\'>Land Rover (Old Model): <span class=\'font-bold text-lime-700\'>5,000,000 KSH</span></p>')">
+                    <span class="font-medium">Land Rover (Old Model):</span>
+                    <span class="font-bold text-green-700">5,000,000 KSH</span>
+                </div>
+                <div class="item-row" onclick="openModal('Volvo', '<p class=\'text-lg font-semibold\'>Volvo: <span class=\'font-bold text-lime-700\'>4,000,000 KSH</span></p>')">
+                    <span class="font-medium">Volvo:</span>
+                    <span class="font-bold text-green-700">4,000,000 KSH</span>
+                </div>
+                <div class="item-row" onclick="openModal('Jaguar F-Pace', '<p class=\'text-lg font-semibold\'>Jaguar F-Pace: <span class=\'font-bold text-lime-700\'>9,000,000 KSH</span></p>')">
+                    <span class="font-medium">Jaguar F-Pace:</span>
+                    <span class="font-bold text-green-700">9,000,000 KSH</span>
+                </div>
+            </div>
+
+            <!-- Education & Professional Development Section -->
+            <div class="card">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Education & Professional Development (4 years)</h3>
+                <p style="font-size: 30px; font-weight: bold; font-family: 'Cambria', serif; text-align: center; margin-top: 1rem; margin-bottom: 1rem;">JESUS CHRIST</p>
+                <div class="section-title-box bg-blue-500" onclick="openModal('Education Details', '<p class=\'text-lg font-semibold mb-2\'>Total Education Budget: <span class=\'font-bold text-orange-700\'>200,000,000 KSH</span></p><ul class=\'list-disc list-inside text-gray-700 space-y-1\'><li>Degree in Accounting and Finance (USIU University): <span class=\'font-bold text-orange-700\'>30,000,000 KSH</span></li><li>Degree in Kenyan Law (Strathmore University): <span class=\'font-bold text-orange-700\'>30,000,000 KSH</span></li><li>Degree in Government (Harvard University): <span class=\'font-bold text-orange-700\'>70,000,000 KSH</span></li><li>Degree in Economics (London School of Economics): <span class=\'font-bold text-orange-700\'>70,000,000 KSH</span></li></ul>', 'orange')">
+                    Education
+                </div>
+                <div class="item-row bg-blue-100 rounded-lg px-3 mb-2">
+                    <span class="font-semibold">Total Education Budget:</span>
+                    <span class="font-bold text-blue-700">200,000,000 KSH</span>
+                </div>
+                <div class="item-row bg-blue-100 rounded-lg px-3 mb-2">
+                    <span class="font-semibold">4 years -2026,2027,2028,2029:</span>
+                    
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Degree in Accounting and Finance (USIU University):</span>
+                    <span class="font-bold text-blue-700">30,000,000 KSH</span>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Degree in Kenyan Law (Strathmore University):</span>
+                    <span class="font-bold text-blue-700">30,000,000 KSH</span>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Degree in Government (Harvard University):</span>
+                    <span class="font-bold text-blue-700">70,000,000 KSH</span>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Degree in Economics (London School of Economics):</span>
+                    <span class="font-bold text-blue-700">70,000,000 KSH</span>
+                </div>
+            </div>
+
+            <!-- Personal Wellbeing Section -->
+            <div class="card">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Sex, Intimacy and Relationships</h3>
+                <div class="section-title-box bg-pink-600" onclick="openModal('Sex, Intimacy and Relationships Details', '<p class=\'text-lg font-semibold mb-2\'>MY PERSONAL SEX GIRLS AND ESCORTS: <span class=\'font-bold text-pink-700\'>84,000,000 KSH</span></p><p class=\'font-semibold text-gray-700 mb-1\'>sexual contract fee:</p><ul class=\'list-disc list-inside text-gray-600 space-y-1\'><li>maryann : <span class=\'font-bold text-pink-700\'>17,000,000 KSH</span></li><li>Joy : <span class=\'font-bold text-pink-700\'>13,000,000 KSH</span></li><li>Natasha : <span class=\'font-bold text-pink-700\'>13,000,000 KSH</span></li><li>caroline : <span class=\'font-bold text-pink-700\'>13,000,000 KSH</span></li><li>shantel : <span class=\'font-bold text-pink-700\'>13,000,000 KSH</span></li></ul><p class=\'text-lg font-semibold mt-4 mb-2\'>Accommodation (12 months): <span class=\'font-bold text-pink-700\'>5,000,000 KSH</span></p><p class=\'text-lg font-semibold mb-2\'>sexual Health Checkups: <span class=\'font-bold text-pink-700\'>5,000,000 KSH</span></p><p class=\'text-lg font-semibold mb-2\'>sexual equipments Care & Supplies: <span class=\'font-bold text-pink-700\'>3,000,000 KSH</span></p><p class=\'text-lg font-semibold\'>2 lawyers -for contracts and legal services : <span class=\'font-bold text-pink-700\'>2,000,000 KSH</span></p>', 'pink')">
+                    Sex, Intimacy and Relationships
+                </div>
+                <div class="item-row bg-pink-100 rounded-lg px-3 mb-2">
+                    <span class="font-semibold">MY PERSONAL SEX GIRLS AND ESCORTS:</span>
+                    <span class="font-bold text-pink-700">84,000,000 KSH</span>
+                </div>
+                <div class="mt-4 mb-2">
+                    <p class="font-semibold text-gray-700 mb-1">sexual contract fee -13 months february 2026 to march 2027:</p>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>maryann : 17,000,000 KSH</li>
+                        <li>Joy : 13,000,000 KSH</li>
+                        <li>Natasha : 13,000,000 KSH</li>
+                        <li>caroline : 13,000,000 KSH</li>
+                        <li>shantel : 13,000,000 KSH</li>
+                    </ul>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">Accommodation (13 months):</span>
+                    <span class="font-bold text-pink-700">5,000,000 KSH</span>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">sexual Health Checkups:</span>
+                    <span class="font-bold text-pink-700">5,000,000 KSH</span>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">sexual equipments Care & Supplies:</span>
+                    <span class="font-bold text-pink-700">3,000,000 KSH</span>
+                </div>
+                <div class="item-row">
+                    <span class="font-medium">2 lawyers -for contracts and legal services :</span>
+                    <span class="font-bold text-pink-700">2,000,000 KSH</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="myModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="closeModal()">&times;</button>
+            <h2 id="modalTitle" class="text-3xl font-bold mb-4"></h2>
+            <div id="modalContent" class="text-gray-800">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to open the modal
+        function openModal(title, content, colorClass) {
+            const modal = document.getElementById('myModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            const modalInnerContent = modal.querySelector('.modal-content');
+
+            modalTitle.textContent = title;
+            modalContent.innerHTML = content;
+
+            // Remove previous color classes and add the new one
+            modalInnerContent.classList.remove('bg-blue-100', 'bg-yellow-100', 'bg-orange-100', 'bg-fuchsia-100', 'bg-teal-100', 'bg-lime-100', 'bg-red-100', 'bg-indigo-100', 'bg-pink-100');
+            modalTitle.classList.remove('text-blue-700', 'text-yellow-700', 'text-orange-700', 'text-fuchsia-700', 'text-teal-700', 'text-lime-700', 'text-red-700', 'text-indigo-700', 'text-pink-700');
+
+            // Define custom color classes for Tailwind's JIT mode if not already defined
+            const colorMap = {
+                'blue': { bg: 'bg-blue-100', text: 'text-blue-700' },
+                'gold': { bg: 'bg-yellow-100', text: 'text-yellow-700' }, /* Using yellow as a close approximation for gold in Tailwind */
+                'orange': { bg: 'bg-orange-100', text: 'text-orange-700' },
+                'pink': { bg: 'bg-pink-100', text: 'text-pink-700' }, /* Using pink for personal wellbeing */
+                'teal': { bg: 'bg-teal-100', text: 'text-teal-700' },
+                'olive': { bg: 'bg-lime-100', text: 'text-lime-700' }, /* Using lime for olive */
+                'red': { bg: 'bg-red-100', text: 'text-red-700' }, /* Added for campaign names */
+                'indigo': { bg: 'bg-indigo-100', text: 'text-indigo-700' } /* New color for legal/accounting */
+            };
+
+            if (colorMap[colorClass]) {
+                modalInnerContent.classList.add(colorMap[colorClass].bg);
+                modalTitle.classList.add(colorMap[colorClass].text);
+            } else {
+                // Default to white background if no specific color is provided or recognized
+                modalInnerContent.classList.add('bg-white');
+                modalTitle.classList.add('text-gray-800');
+            }
+
+            modal.classList.add('show');
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            const modal = document.getElementById('myModal');
+            modal.classList.remove('show');
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>
